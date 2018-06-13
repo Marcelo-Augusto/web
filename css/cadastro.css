@@ -1,0 +1,136 @@
+/* Esconde o input */
+input[type='file'] {
+    display: none
+}
+
+
+/*destaca um editor quando eh passado o mouse por cima*/
+.editor:hover{
+    box-shadow:0 4px 6px rgba(0,0,0,0.1); 
+}
+
+/*dah um destaque ainda maior quando o editor recebe o foco*/
+.editor:focus{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/*estido da foto do produto*/
+#image_product {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+}
+
+/*estilo da imagem de remover o produto*/
+#image_remove_product{
+    width: 100%;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+/*estilo do botao de alterar a foto do produto*/
+#button_change_product_photo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+/*mostar o botao de alterar o produto quando é passado o mouse por cima dele*/
+#button_change_product_photo:hover {
+    display: inline-block;
+}
+
+/*quando o mouse é passado por cima da foto do produto, mostrar o botao de alterar a foto*/
+#image_product:hover + #button_change_product_photo {
+    display: inline-block;
+}
+
+/*estilo do editor do nome do produto*/
+#editor_name{
+    font-size: 26px;
+    background: none;
+    border: none;
+    border-color: transparent;
+    width: 100%;
+    transition:box-shadow 0.5s ease;
+    border-radius:3px;
+    margin-bottom: 10px;
+    padding: 5px;
+    color: #444444;
+}
+
+#editor_preco{
+    font-size: 16px;
+    background: none;
+    border: none;
+    border-color: transparent;
+    width: 100%;
+    transition:box-shadow 0.5s ease;
+    border-radius:3px;
+    margin-bottom: 10px;
+    padding: 5px;
+    color: #444444;
+}
+
+/*estilo do editor da descricao do produto*/
+#editor_description {
+    width:100%;
+    display:block;
+    max-width:100%;
+    border-radius:3px;
+    padding: 5px;
+    transition:box-shadow 0.5s ease;
+    background: none;
+    border: none;
+    border-color: transparent;
+    height: 100%;
+    resize: none;
+    margin-bottom: 10px;
+    color: #444444;
+}
+
+#category_dropdown{
+    width: 100%;
+    height: 100%;
+}
+
+#button_dropdown_category{
+    width: 80%;
+    height: 100%;
+    background: rgba(0,0,0,0);
+    color:#444444; 
+}
+
+#ul_dropdown_category{
+    width: 80%;
+    margin-left: 10%;
+}
+
+.a_dropdown_category{
+    text-align: center;
+}
+
+#div_button_new_product{
+    text-align: right;
+}
+
+#button_new_product{
+    height: 100%;
+    background: #FFBC49;
+}
+
+#div_panel_product{
+    background: #FFBC49;
+    border-radius: 4px;
+}
