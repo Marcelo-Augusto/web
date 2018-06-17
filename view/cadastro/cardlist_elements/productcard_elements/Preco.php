@@ -18,7 +18,7 @@ class Preco {
                 </div>
                 <div class="col-sm-5" style="background-color:lavenderblush;">
                     <div class="container">
-                        <button id="set_price_visible" type="button" class="btn btn-default">Tornar preço invisível</button>
+                        <button id="set_price_visible" type="button" class="btn btn-default" onclick="asdf(id)">Tornar preço invisível</button>
                         <button id="remove_price" type="button" class="btn btn-danger">Remover preço</button>
                         <button id="confirm_price_change" type="button" class="btn btn-success">Confirmar alteração</button>     
                     </div>
