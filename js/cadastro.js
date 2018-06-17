@@ -240,7 +240,7 @@ app.product = (function (module) {
 //            console.log("updateProduct " + productId);
 //        }
 
-        if(productId==-1){
+        if (productId == -1) {
             app.product.removeProduct(productId);
             app.createProductCardWithId(indice);
             $("#message").html("updateProduct - alterou id de " + productId + " para " + indice);
@@ -264,22 +264,23 @@ app.product.price = (function (module) {
 
     module.createItemPriceList = function (productId) {
         if (!app.product.price.hasNewItemPrice) {
-            var template = "<div class='row'>" +
+            var priceId = -1;
+            var template = "<div id='div_price_line" + productId + "_" + priceId + "' class='row'>" +
                     "<form>" +
                     "<div class='col-sm-1' style='background-color:lavender;'>" +
                     "<h4>R$</h4>" +
                     "</div>" +
                     "<div class='col-sm-2' style='background-color:lavenderblush;'>" +
-                    "<input id='price_value" + productId + "' type='text' class='form-control'>" +
+                    "<input id='price_value" + productId + "" + priceId + "' type='text' class='form-control'>" +
                     "</div>" +
                     "<div class='col-sm-4' style='background-color:lavenderblush;'>" +
-                    "<input id='price_description" + productId + "' type='text' class='form-control' >" +
+                    "<input id='price_description" + productId + "" + priceId + "' type='text' class='form-control' >" +
                     "</div>" +
                     "<div class='col-sm-5' style='background-color:lavenderblush;'>" +
                     "<div class='container'>" +
-                    "<button id='set_price_visible' type='button' class='btn btn-default' onclick='app.product.price.setPriceVisibility(" + productId + ")'>Tornar preço invisível</button>" +
-                    "<button id='remove_price' type='button' class='btn btn-danger' onclick='app.product.price.removePrice(" + productId + ")'>Remover preço</button>" +
-                    "<button id='confirm_price_change' type='button' class='btn btn-success' onclick='app.product.price.updatePrice(" + productId + ")' >Confirmar alteração</button>" +
+                    "<button id='set_price_visible' type='button' class='btn btn-default' onclick='app.product.price.setPriceVisibility(" + productId + "," + priceId + ")'>Tornar preço invisível</button>" +
+                    "<button id='remove_price' type='button' class='btn btn-danger' onclick='app.product.price.removePrice(" + productId + "," + priceId + ")'>Remover preço</button>" +
+                    "<button id='confirm_price_change' type='button' class='btn btn-success' onclick='app.product.price.updatePrice(" + productId + "," + priceId + ")' >Confirmar alteração</button>" +
                     "</div>" +
                     "</div>" +
                     "</form>" +
@@ -294,16 +295,54 @@ app.product.price = (function (module) {
 
     };
 
-    module.setPriceVisibility = function (productId) {
-        $("#message").html("setPriceVisibility " + productId);
+    module.createItemPriceListWithId = function (productId, priceId) {
+        var template = "<div id='div_price_line" + productId + "_" + priceId + "' class='row'>" +
+                    "<form>" +
+                    "<div class='col-sm-1' style='background-color:lavender;'>" +
+                    "<h4>R$</h4>" +
+                    "</div>" +
+                    "<div class='col-sm-2' style='background-color:lavenderblush;'>" +
+                    "<input id='price_value" + productId + "" + priceId + "' type='text' class='form-control'>" +
+                    "</div>" +
+                    "<div class='col-sm-4' style='background-color:lavenderblush;'>" +
+                    "<input id='price_description" + productId + "" + priceId + "' type='text' class='form-control' >" +
+                    "</div>" +
+                    "<div class='col-sm-5' style='background-color:lavenderblush;'>" +
+                    "<div class='container'>" +
+                    "<button id='set_price_visible' type='button' class='btn btn-default' onclick='app.product.price.setPriceVisibility(" + productId + "," + priceId + ")'>Tornar preço invisível</button>" +
+                    "<button id='remove_price' type='button' class='btn btn-danger' onclick='app.product.price.removePrice(" + productId + "," + priceId + ")'>Remover preço</button>" +
+                    "<button id='confirm_price_change' type='button' class='btn btn-success' onclick='app.product.price.updatePrice(" + productId + "," + priceId + ")' >Confirmar alteração</button>" +
+                    "</div>" +
+                    "</div>" +
+                    "</form>" +
+                    "</div>";
+
+            $("#div_price" + productId).append(template);
+            app.product.price.hasNewItemPrice = true;
+            $("#message").html("createItemPriceList - criou novo item " + productId);
+    };
+
+    module.setPriceVisibility = function (productId, priceId) {
+        $("#message").html("setPriceVisibility " + productId + " " + priceId);
     }
 
-    module.removePrice = function (productId) {
-        $("#message").html("removePrice " + productId);
+    module.removePrice = function (productId, priceId) {
+        $("#div_price_line" + productId + "_" + priceId).remove();
+        if (priceId == -1) {
+            app.product.price.hasNewItemPrice = false;
+        }
+        $("#message").html("removePrice " + productId + " " + priceId);
     }
 
-    module.updatePrice = function (productId) {
-        $("#message").html("updatePrice " + productId);
+    module.updatePrice = function (productId, priceId) {
+        if(priceId==-1){
+            $("#div_price_line" + productId + "_" + priceId).replaceWith(app.product.price.createItemPriceListWithId(productId, priceIndex));
+            $("#message").html("updatePrice  " + productId + " - alterou de " + priceId + " para " + priceIndex);
+            priceIndex = priceIndex +1;
+            app.product.price.hasNewItemPrice = false;
+        } else {
+            $("#message").html("updatePrice " + productId + " " + priceId);
+        }
     }
 
 
