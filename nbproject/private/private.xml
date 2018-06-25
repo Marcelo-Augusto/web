@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/view/cadastro/cardlist_elements/productcard_elements/Preco.php</file>
-            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/view/cadastro/CardListView.php</file>
-            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/Cadastro.php</file>
-            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/view/cadastro/cardlist_elements/ProductCard.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/testeEditarProdutoComBootstrap.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/testeListaCadastro.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/testeObterListaProduto.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/testeCadastro.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/connection/connection.php</file>
+            <file>file:/C:/Program%20Files%20(x86)/Ampps/www/TesteMVC/testeCadastroProdutoComBootstrap.php</file>
         </group>
     </open-files>
 </project-private>
