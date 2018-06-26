@@ -26,6 +26,8 @@ if (isset($_POST[salvar_dados])) {
     mysqli_query($conn, $scriptSQL);
     $index = mysqli_insert_id($conn);
     $name_category = $_POST[name_category];
+    
+    header("location: ./testeEditarProdutoComBootstrap.php?editar=1&id=".$index);
 } else {
     $name_category = $_GET[name_category];
     $scriptCategory = "SELECT * FROM `category` WHERE name = '" . $name_category . "' ";

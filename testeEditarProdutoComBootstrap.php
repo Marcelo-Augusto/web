@@ -135,6 +135,73 @@ if (isset($_POST[editar_dados])) {
                         <input type="hidden" id="photo_change" name="photo_change">
                         <input type="hidden" value="<?php echo $vetor->id_meal; ?>" id="id_meal" name="id_meal">
                     </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Preços</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label for="usr">Valor:</label>
+                                    <input type="text" class="form-control" id="value" name="value" placeholder="valor">
+                                </div>
+                                <div class="col-sm-10">
+                                    <label for="usr">Descrição do preço:</label>
+                                    <input type="text" class="form-control" id="price_description" name="price_description" placeholder="Descrição">
+                                </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="text-center">
+                                        <span class="pull-right"><div class="btn btn-primary" onclick="adicionarPreco()">Adicionar</div></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <ul id="price_list" class="list-group">
+                                <?php
+                                $price_query = "SELECT * FROM `price` WHERE `id_meal` = " . $vetor->id_meal . " ";
+                                $result_price = $conn->query($price_query);
+                                while ($price = $result_price->fetch_object()) {
+                                    ?>
+                                    <li id="price_item<?php echo $price->id_price; ?>" class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-sm-2">
+                                                <p><b id="b<?php echo $price->id_price; ?>"><?php echo 'R$' . number_format($price->price, 2, ',', '.'); ?></b></p>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p><b><?php echo $price->description; ?></b></p>
+                                            </div>
+
+                                            <div class="col-sm-2">
+                                                <span class="pull-right">
+                                                    <div class="form-group">
+                                                        <div class="checkbox">
+                                                            <label><input id="enable" name="enable" type="checkbox" value="<?php echo $price->enable; ?>"
+                                                                          <?php 
+                                                                            if($price->enable=='1'){
+                                                                                echo "checked";
+                                                                            }
+                                                                          ?>
+                                                                          onchange="setPriceVisibility(<?php echo $price->id_price; ?>, this)" >Tornar preço visível</label>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <span class="pull-right"><div class="btn btn-default" onclick="removerPreco(<?php echo $price->id_price; ?>)">Remover</div></span>
+                                            </div>
+                                        </div> 
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul> 
+                        </div>
+                    </div>
+
+                    <br>
+
                     <div class="text-center">
                         <a href="./testeListaCadastro.php" class="btn btn-default">Lista de produtos</a>
                         <button type="submit" class="btn btn-primary" name="remover_produto" value="remover">Remover</button>
@@ -142,6 +209,8 @@ if (isset($_POST[editar_dados])) {
                     </div>
 
                 </form>
+                <br>
+                <br>
             </div>
             <?php
         }
@@ -190,6 +259,84 @@ if (isset($_POST[editar_dados])) {
             }
 
         });
+
+        function adicionarPreco() {
+
+            var id = $('#id_meal').val();
+            var p = $('#value').val();
+            var price_description = $('#price_description').val();
+            //alert("adicionar preco "+id+" "+price+" "+price_description);
+            //testeCadastroNovoPreco
+            var price = p.replace(",", ".");
+            if (isNaN(price)) {
+                alert("Insira um preço correto!");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "./testeCadastroNovoPreco.php",
+                    data: {"id": id, "price": price, "price_description": price_description},
+                    success: function (data)
+                    {
+                        //alert(data);
+                        $("#price_list").append(data);
+                        $('#value').val("");
+                        $('#price_description').val("");
+                        //document.getElementById("teste").innerHTML = data;
+                        //utilizar o dado retornado para alterar algum dado da tela.
+                    }
+                });
+            }
+        }
+
+        function removerPreco(index) {
+            //alert("remover preco");
+            $("#price_item" + index).remove();
+            //testeRemoverPreco
+            $.ajax({
+                type: "POST",
+                url: "./testeRemoverPreco.php",
+                data: {"id": index},
+                success: function (data)
+                {
+                    //alert(data);
+                    //document.getElementById("teste").innerHTML = data;
+                    //utilizar o dado retornado para alterar algum dado da tela.
+                }
+            });
+        }
+
+        function setPriceVisibility(index, element) {
+            var value = element.value;
+            if (value == '1') {
+                $(element).attr('value', '0');
+                value = '0';
+            } else {
+                $(element).attr('value', '1');
+                value = '1';
+            }
+            //testeAlterarVisibilidadeDoPreco
+            //alert("alterou visibilidade! " + value)
+            $.ajax({
+                type: "POST",
+                url: "./testeAlterarVisibilidadeDoPreco.php",
+                data: {"id": index, "value": value},
+                success: function (data)
+                {
+                    //alert(data);
+                    //document.getElementById("teste").innerHTML = data;
+                    //utilizar o dado retornado para alterar algum dado da tela.
+                }
+            });
+        }
+
+        function numberToReal(index, numero) {
+            var numero = numero.toFixed(2).split('.');
+            numero[0] = "R$ " + numero[0].split(/(?=(?:...)*$)/).join('.');
+            var price = numero.join(',');
+            //alert("numero: "+price);
+            document.getElementById("b" + index).innerHTML = price;
+            return price;
+        }
     </script>
 </html>
 
